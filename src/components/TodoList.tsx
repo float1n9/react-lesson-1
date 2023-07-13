@@ -6,9 +6,9 @@ interface TodoListInterface {
 }
 
 export const TodoList: React.FC = () => {
-    const [todolist, setTodoList] = useState<TodoListInterface[]>([])
+    const [todoList, setTodoList] = useState<TodoListInterface[]>([])
     const [title, setTitle] = useState('')
-    const [localStorageName] = 'db-todolist'
+    const [localStorageName] = 'db-todoList'
 
     useEffect(() => {
         const info = JSON.parse(localStorage.getItem(localStorageName) || '[]')
@@ -16,7 +16,7 @@ export const TodoList: React.FC = () => {
     }, [])
 
     function handleTodoList() {
-        const newTodoList = todolist
+        const newTodoList = todoList
         newTodoList.push({title})
         setTodoList(newTodoList)
         setTitle('')
@@ -24,7 +24,7 @@ export const TodoList: React.FC = () => {
     }
 
     function removeTodoListTask(title: string) {
-        const newTodoList = todolist.filter((item) => item.title !== title)
+        const newTodoList = todoList.filter((item) => item.title !== title)
         setTodoList(newTodoList)
         localStorage.setItem(localStorageName, JSON.stringify(newTodoList))
     }
@@ -43,8 +43,8 @@ export const TodoList: React.FC = () => {
                 </form>
             </div>
             <div className='listAllTasks'>
-                {todolist.length > 0 ? (
-                    todolist.map((item, index) => (
+                {todoList.length > 0 ? (
+                    todoList.map((item, index) => (
                         <React.Fragment key={index}>
                             <TodoListTask index={index} title={item.title} />
                             <button onClick={()=>removeTodoListTask(item.title)}>Remove</button>
