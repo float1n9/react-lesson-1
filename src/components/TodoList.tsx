@@ -1,23 +1,20 @@
-import React, {useEffect, useState} from "react";
+import React, {useState} from "react";
 import {TodoListTask} from "./TodoListTask.tsx";
 
 interface TodoListInterface {
     title: string;
 }
 
-export const TodoList: React.FC = () => {
-    const [todoList, setTodoList] = useState<TodoListInterface[]>([])
-    const [title, setTitle] = useState('')
-    const [localStorageName] = 'db-todoList'
+const localStorageName = 'db-todoList'
 
-    useEffect(() => {
-        const info = JSON.parse(localStorage.getItem(localStorageName) || '[]')
-        setTodoList(info || [])
-    }, [])
+export const TodoList: React.FC = () => {
+    const [todoList, setTodoList] = useState<TodoListInterface[]>(() => {
+        return JSON.parse(localStorage.getItem(localStorageName) || '[]')
+    })
+    const [title, setTitle] = useState('')
 
     function handleTodoList() {
-        const newTodoList = todoList
-        newTodoList.push({title})
+        const newTodoList = [...todoList, {title}]
         setTodoList(newTodoList)
         setTitle('')
         localStorage.setItem(localStorageName, JSON.stringify(newTodoList))
